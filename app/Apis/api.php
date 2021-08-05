@@ -82,3 +82,9 @@ if (isset($_POST['action']) and $_POST['action'] === "paystack") {
     $response = DataBase::updatetrans("dollar", $response, $ammount);
     echo $response;
 }
+if (isset($_POST['action']) and $_POST['action'] === "mainpay") {
+    $response = $_POST['response'];
+    $ammount = htmlentities($_POST['amt']);
+    $response = DataBase::updatetrans("bit", $response, $ammount);
+    echo $response;
+}

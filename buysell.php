@@ -5,6 +5,15 @@ if (!DataBase::is_login()) {
     header('location:login');
 }
 
+$f = DataBase::getCampain("f");
+$s = DataBase::getCampain("s");
+$t = DataBase::getCampain("t");
+$btc_f = DataBase::USDtoBTC($f);
+$btc_s = DataBase::USDtoBTC($s);
+$btc_t = DataBase::USDtoBTC($t);
+$btc_price= $_SESSION['btcprice'];
+//echo $btc_f;
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -229,6 +238,7 @@ if (!DataBase::is_login()) {
         </div>
     </div>
 
+
     <!--  ---- ---- Sales Cards ----- -- -->
     <div class="cards-container">
 
@@ -236,15 +246,15 @@ if (!DataBase::is_login()) {
         <div class="200-dollar">
             <div class="w3-card card two-h">
                 <button class="price-tag">
-                    <h1 class="font-topic"> $ <label class="font-topic" id="f"><?php echo (DataBase::getCampain("f"));  ?></label> </h1>
+                    <h1 class="font-topic"> $ <label class="font-topic" id="f"><?php echo $f;?></label> </h1>
                 </button>
                 <div class="timer">
                     <h2>Get</h2>
-                    <b class="f-bigi"> <label class="f-bigi"><?php echo(DataBase::USDtoBTC(DataBase::getCampain("s"))); ?></label> </b>
+                    <b class="f-bigi"> <label class="f-bigi"><?php echo $btc_f?></label> </b>
                     <br>
                     <b class="f-bigi">BTC</b>
                 </div>
-                <p class="padding-sides"> <button class="buy-btn"> BUY </button> </p>
+                <p class="padding-sides"> <button id="f_buy" class="buy-btn"> BUY </button> </p>
             </div>
         </div>
 
@@ -252,15 +262,15 @@ if (!DataBase::is_login()) {
         <div class="500-dollar">
             <div class="w3-card card five-h">
                 <button class="price-tag">
-                    <h1 class="font-topic"> $ <label class="font-topic" id="s"><?php echo DataBase::getCampain("s")  ?> </h1>
+                    <h1 class="font-topic"> $ <label class="font-topic" id="s"><?php echo $s;  ?> </h1>
                 </button>
                 <div class="timer">
                     <h2>Get</h2>
-                    <b class="f-bigi"> <label class="f-bigi"><?php echo(DataBase::USDtoBTC(DataBase::getCampain("s"))); ?></label> </b>
+                    <b class="f-bigi"> <label class="f-bigi"><?php echo $btc_s?></label> </b>
                     <br>
                     <b class="f-bigi">BTC</b>
                 </div>
-                <p class="padding-sides"> <button class="buy-btn"> BUY </button> </p>
+                <p class="padding-sides"> <button id="s_buy" class="buy-btn"> BUY </button> </p>
                 <div class="ff-bigi"> POPULAR </div>
             </div>
         </div>
@@ -269,15 +279,15 @@ if (!DataBase::is_login()) {
         <div class="1000-dollar">
             <div class="w3-card card breeze one-k">
                 <button class="price-tag">
-                    <h1 class="font-topic"> $ <label class="font-topic" id="t"><?php echo DataBase::getCampain("t")  ?> </h1>
+                    <h1 class="font-topic"> $ <label class="font-topic" id="t"><?php echo $t; ?> </h1>
                 </button>
                 <div class="timer">
                     <h2>Get</h2>
-                    <b class="f-bigi"> <label class="f-bigi"><?php echo(DataBase::USDtoBTC(DataBase::getCampain("t"))); ?></label> </b>
+                    <b class="f-bigi"> <label class="f-bigi"><?php echo $btc_t?></label> </b>
                     <br>
                     <b class="f-bigi">BTC</b>
                 </div>
-                <p class="padding-sides"> <button class="buy-btn"> BUY </button> </p>
+                <p class="padding-sides"> <button id="t_buy" class="buy-btn"> BUY </button> </p>
             </div>
         </div>
 
@@ -293,7 +303,7 @@ if (!DataBase::is_login()) {
                 <!-- ==== tablets =====  -->
                 <p class="input-con">
                 <div class="input-con-main">
-                    <label> <input type="number" name="usd" class="usd"></label>
+                    <label> <input type="number" name="usd" id="usd" class="usd"></label>
                     <label>USD </label>
                 </div>
                 <small class="warn">
@@ -304,7 +314,7 @@ if (!DataBase::is_login()) {
                 <!-- ====== Tablets two =====  -->
                 <p class="input-con">
                 <div class="input-con-main">
-                    <label> <input type="number" name="btc" class="usd"></label>
+                    <label> <input type="number" name="btc" id="btc" class="usd"></label>
                     <label>BTC </label>
                 </div>
                 <small class="warn">
@@ -312,7 +322,7 @@ if (!DataBase::is_login()) {
                 </small>
                 </p>
                 <br><br><br><br>
-                <p class="padding-sides"> <button class="buy-btn"> BUY </button> </p>
+                <p class="padding-sides"> <button id="conv_buy" class="buy-btn"> BUY </button> </p>
             </div>
         </div>
 
@@ -558,7 +568,7 @@ if (!DataBase::is_login()) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
             integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous">
         </script>
-
+<!--        <script src="https://js.paystack.co/v1/inline.js"></script>-->
         <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
@@ -566,48 +576,155 @@ if (!DataBase::is_login()) {
         <script src="./js/crypto.js"> </script>
         <script src="./js/myjavacode.js"></script>
         <script src="js/jq.js"></script>
+        <script src="https://js.paystack.co/v1/inline.js"></script>
         <script>
         $(document).ready(function() {
-            // alert("iii");
-            var currency = 1;
-            $("#curchanger").change(function() {
-                currency = $(this).val();
-            });
-            $("#pay").click(function() {
-                // console.log(currency)
-                var amt = $("#amt").val();
-                if (amt.trim().length > 0) {
-                    switch (currency) {
-                        case 1:
+
+            function payWithPaystack(amt,btcamt) {
+
+                let key = "<?php
+                    echo DataBase::getApiPublic("paystack");
+                    ?>";
+                let gmail = "<?php
+                    echo DataBase::getValue("email", "users")
+                    ?>";
+                let handler = PaystackPop.setup({
+                    key: key.trim()??"pk_live_c0c951cc9ca521c1cccf99b4360221b121d87108", // Replace with your public key
+                    email: gmail.trim(),
+                    amount: amt*100,
+                    currency:"USD",
+                    ref: '' + Math.floor(Math.random() * 1000000000 + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                    // label: "Optional string that replaces customer email"
+                    onClose: function () {
+                        alert('Window closed.')
+                    },
+                    callback: function (response) {
+                        let url="app/Apis/api.php";
+                        // console.log(response)
+                        if(response['message']==="Approved" || response['status']==="success"){
                             $.ajax({
-                                type: "get",
-                                url: "app/buy.php",
-                                data: {
-                                    price: amt
+                                url:url,
+                                method: 'post',
+                                data:{
+                                    action:"mainpay",
+                                    response:response,
+                                    amt:btcamt
                                 },
-                                // dataType: "dataType",
-                                success: function(response) {
-                                    $(".modal-body").html(response);
-                                    var myModal = new bootstrap.Modal(document
-                                        .getElementById('exampleModalToggle2'), {
-                                            keyboard: false
-                                        })
-                                    var myModal1 = new bootstrap.Modal(document
-                                        .getElementById('exampleModalToggle'), {
-                                            keyboard: false
-                                        })
-                                    myModal1.hide()
+                                success: function (httpresponse) {
+                                    console.log(httpresponse)
+                                    alert(httpresponse);
 
-
-                                }
+                                    // the transaction status is in response.data.status
+                                },
                             });
-                            break;
-                    }
-                } else {
-                    console.log("not ok")
-                }
+                        }else{
+                            alert(response['message']);
+                        }
 
+                    },
+                });
+                handler.openIframe();
+            }
+
+            $("#f_buy").click(function () {
+
+                let amt="<?php echo $f?>";
+                let btc_amt="<?php echo $btc_f ?>";
+
+                if(amt.trim().length>0){
+                   payWithPaystack(amt.trim(),btc_amt);
+                }
             })
+
+            $("#s_buy").click(function () {
+
+                let amt="<?php echo $s?>";
+                let btc_amt="<?php echo $btc_s ?>";
+
+                if(amt.trim().length>0){
+                    payWithPaystack(amt.trim(),btc_amt);
+                }
+            })
+
+            $("#t_buy").click(function () {
+
+                let amt="<?php echo $t?>";
+                let btc_amt="<?php echo $btc_t ?>";
+
+                if(amt.trim().length>0){
+                    payWithPaystack(amt.trim(),btc_amt);
+                }
+            })
+
+
+
+
+            $("#usd").keyup(function () {
+                let usdamt=$(this).val().trim();
+                let btcprice="<?php echo $btc_price; ?>";
+                let cp= (parseFloat(usdamt)/parseFloat(btcprice)).toFixed(9);
+                $("#btc").val(cp);
+            })
+            $("#usd").change(function () {
+                let usdamt=$(this).val().trim();
+                let btcprice="<?php echo $btc_price; ?>";
+                let cp= (parseFloat(usdamt)/parseFloat(btcprice)).toFixed(9);
+                    $("#btc").val(cp);
+                // return round((int)$amount / $price,5,PHP_ROUND_HALF_UP);
+            });
+            $("#btc").keyup(function () {
+                let usdamt=$(this).val().trim();
+                let btcprice="<?php echo $btc_price; ?>";
+                let cp= (parseFloat(usdamt)*parseFloat(btcprice)).toFixed(2);
+                $("#usd").val(cp);
+            })
+            $("#btc").change(function () {
+                let usdamt=$(this).val().trim();
+                let btcprice="<?php echo $btc_price; ?>";
+                let cp= (parseFloat(usdamt)*parseFloat(btcprice)).toFixed(2);
+                $("#usd").val(cp);
+                // return round((int)$amount / $price,5,PHP_ROUND_HALF_UP);
+            });
+            // alert("iii");
+            // let currency = 1;
+            // $("#curchanger").change(function() {
+            //     currency = $(this).val();
+            // });
+            // $("#pay").click(function() {
+            //     // console.log(currency)
+            //     let amt = $("#amt").val();
+            //     if (amt.trim().length > 0) {
+            //         // switch (currency) {
+            //         //     case 1:
+            //         //         $.ajax({
+            //         //             type: "get",
+            //         //             url: "app/buy.php",
+            //         //             data: {
+            //         //                 price: amt
+            //         //             },
+            //         //             // dataType: "dataType",
+            //         //             success: function(response) {
+            //         //                 $(".modal-body").html(response);
+            //         //                 let myModal = new bootstrap.Modal(document
+            //         //                     .getElementById('exampleModalToggle2'), {
+            //         //                         keyboard: false
+            //         //                     })
+            //         //                 let myModal1 = new bootstrap.Modal(document
+            //         //                     .getElementById('exampleModalToggle'), {
+            //         //                         keyboard: false
+            //         //                     })
+            //         //                 myModal1.hide()
+            //         //
+            //         //
+            //         //             }
+            //         //         });
+            //         //         break;
+            //         // }
+            //     } else {
+            //         console.log("not ok")
+            //     }
+            //
+            // })
         })
         </script>
 </body>

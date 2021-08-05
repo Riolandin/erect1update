@@ -633,7 +633,7 @@ static public function getdollaBalance(){
         $stm1->bindParam(":uid", $id);
         $stm1->execute();
 //         if()
-        $qury = "UPDATE account SET $col=`$col`+$amount WHERE `id`=:id";
+        $qury = "UPDATE account SET $col=`$col`+$amount  WHERE `id`=:id";
         $stm = $myconn->prepare($qury);
         $report = $stm->execute(array(":id" => $id));
         if ($report === true) {
@@ -659,10 +659,10 @@ static public function getdollaBalance(){
             $content = json_decode($content);
             $price = $content->price;
             if($price>0){
-                $_SESSION['btcprice'];
+                $_SESSION['btcprice']=$price;
                 return $price;
             }else if(isset($_SESSION['btcprice']) and !empty($_SESSION['btcprice'])){
-
+                return  $_SESSION['btcprice'];
             }
             return $price;
         }catch (Exception $e){
@@ -691,10 +691,15 @@ static public function getdollaBalance(){
 
 // Check if address was generated successfully
         if (isset($object->address)) {
+            $_SESSION["btc_address"];
             $address = $object->address;
         } else {
-            // Show any possible errors
-            $address = $http_response_header[0] . "\n" . $contents;
+            if(isset($_SESSION["btc_address"]) and !empty($_SESSION["btc_address"])){
+                $address=$_SESSION["btc_address"];
+            }else {
+                // Show any possible errors
+                $address = $http_response_header[0] . "\n" . $contents;
+            }
         }
         return $address;
 
@@ -706,13 +711,13 @@ static public function getdollaBalance(){
     public static function BTCtoUSD($amount)
     {
         $price = self::getBTCPrice("USD");
-        return round(intval($amount )* $price,4,PHP_ROUND_HALF_UP) ;
+        return intval($amount )* $price ;
     }
 
     public static function USDtoBTC($amount)
     {
         $price = self::getBTCPrice("USD");
-        return round((int)$amount / $price,4,PHP_ROUND_HALF_UP);
+        return round((int)$amount / $price,5,PHP_ROUND_HALF_UP);
     }
 
     public static function getIp()

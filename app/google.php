@@ -34,7 +34,7 @@ if (isset($_GET['code'])) {
     $gender = $google_account_info->gender;
     $image = $google_account_info->picture;
     $id = $google_account_info->id;
-    $locale = get_contry() != null ? get_contry() : "not set";
+    $locale = DataBase::get_contry() != null ? DataBase::get_contry() : "not set";
     // print_r(get_contry());
     $isActive = DataBase::signin_user($email, $id);
 
