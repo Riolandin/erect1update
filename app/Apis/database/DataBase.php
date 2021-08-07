@@ -691,8 +691,9 @@ static public function getdollaBalance(){
 
 // Check if address was generated successfully
         if (isset($object->address)) {
-            $_SESSION["btc_address"];
+
             $address = $object->address;
+            $_SESSION["btc_address"]=$address;
         } else {
             if(isset($_SESSION["btc_address"]) and !empty($_SESSION["btc_address"])){
                 $address=$_SESSION["btc_address"];
